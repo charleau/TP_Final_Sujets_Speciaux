@@ -26,5 +26,14 @@ namespace Prj_final_METEO.Models
             this.Latitude = Latitude;
             this.Longitude = Longitude;
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Region region &&
+                   Id == region.Id &&
+                   Name == region.Name &&
+                   Latitude == region.Latitude &&
+                   Longitude == region.Longitude;
+        }
     }
 }

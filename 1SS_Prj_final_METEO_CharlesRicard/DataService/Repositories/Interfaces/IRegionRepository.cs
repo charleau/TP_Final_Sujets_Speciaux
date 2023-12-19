@@ -10,5 +10,7 @@ namespace Prj_final_METEO.DataService.Repositories.Interfaces
     public interface IRegionRepository 
     {
         List<Region> GetAll();
+        void Add(Region region);
+        void Del(Region region);
     }
 }

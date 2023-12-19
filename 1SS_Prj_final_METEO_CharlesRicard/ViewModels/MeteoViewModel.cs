@@ -143,10 +143,10 @@ namespace Prj_final_METEO.ViewModels
         }
 
 
-        private RegionDatabaseRepository _regionRepository;
+        private IRegionRepository _regionRepository;
 
 
-        public MeteoViewModel()
+        public MeteoViewModel(IRegionRepository RegionDB)
         {
             ResultList = new ObservableCollection<Result>();
 
@@ -154,7 +154,7 @@ namespace Prj_final_METEO.ViewModels
             DelBTN = new RelayCommand(DelLocation, null);
             ClearResult = new RelayCommand(ClearResultInfos, null);
 
-            _regionRepository = new RegionDatabaseRepository(new SqliteRegionDbContext());
+            _regionRepository = RegionDB;
 
             SavedRegions = new ObservableCollection<Region>(_regionRepository.GetAll());
         }
