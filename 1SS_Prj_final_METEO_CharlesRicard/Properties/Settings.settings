@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Prj_final_METEO.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="JetonKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">989afb3c7f62a1d34026beb6faa5508a</Value>
+    </Setting>
+    <Setting Name="langue" Type="System.String" Scope="User">
+      <Value Profile="(Default)">en-US</Value>
+    </Setting>
+    <Setting Name="DataBaseConnexionChaine" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Data Source = Region.db</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
