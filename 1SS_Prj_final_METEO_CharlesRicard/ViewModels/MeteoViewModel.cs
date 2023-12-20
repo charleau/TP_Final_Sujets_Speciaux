@@ -252,8 +252,6 @@ namespace Prj_final_METEO.ViewModels
             {
                 MessageBox.Show("Error\n" + ex);
             }
-
-            Client.Dispose();
         }
     }
 }
