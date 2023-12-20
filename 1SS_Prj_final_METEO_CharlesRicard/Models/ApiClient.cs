@@ -17,13 +17,13 @@ namespace Prj_final_METEO.Models
         private string _urlBaseApi;
         private HttpClient _httpClient;
 
-        public ApiClient(string urlBaseApi, HttpClient httpClient)
+        public ApiClient(string urlBaseApi)
         {
             if (urlBaseApi.EndsWith('/'))
                 urlBaseApi = urlBaseApi.Substring(0, urlBaseApi.Length - 1);
             _urlBaseApi = urlBaseApi;
 
-            _httpClient = httpClient;
+            _httpClient = new HttpClient();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }

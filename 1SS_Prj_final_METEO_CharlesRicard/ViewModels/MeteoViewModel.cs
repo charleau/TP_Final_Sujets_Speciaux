@@ -30,6 +30,8 @@ namespace Prj_final_METEO.ViewModels
         public RelayCommand DelBTN { get; set; }
         public RelayCommand ClearResult {  get; set; }
 
+        public ApiClient Client { get; set; }
+
         public ObservableCollection<Result> resultList;
 
         public ObservableCollection<Result> ResultList
@@ -146,7 +148,7 @@ namespace Prj_final_METEO.ViewModels
         public IRegionRepository _regionRepository;
 
 
-        public MeteoViewModel(IRegionRepository RegionDB)
+        public MeteoViewModel(IRegionRepository RegionDB, ApiClient _ApiClient)
         {
             ResultList = new ObservableCollection<Result>();
 
@@ -155,6 +157,7 @@ namespace Prj_final_METEO.ViewModels
             ClearResult = new RelayCommand(ClearResultInfos, null);
 
             _regionRepository = RegionDB;
+            Client = _ApiClient;
 
             SavedRegions = new ObservableCollection<Region>(_regionRepository.GetAll());
         }
@@ -195,7 +198,7 @@ namespace Prj_final_METEO.ViewModels
             savedRegions.Remove(regToDel);
         }
 
-        public void GetMeteoCommand(object? obj)
+        public async void GetMeteoCommand(object? obj)
         {
             if (Properties.Settings.Default.JetonKey == "")
             {
@@ -203,13 +206,11 @@ namespace Prj_final_METEO.ViewModels
                 return;
             }
             ResultList.Clear();
-            GetMeteo(SelectedRegion);
+            await GetMeteo(SelectedRegion);
         }
 
-        public async void GetMeteo(Region region)
+        public async Task GetMeteo(Region region)
         {
-            ApiClient client = new ApiClient("https://api.weatherbit.io/v2.0/forecast/daily", new HttpClient());
-
             #region Conversion de lat/loo
             // Conversion de lat/lon parce que mon pc est en français mais pas mon portable lol
             string lat = "" + region.Latitude;
@@ -226,7 +227,7 @@ namespace Prj_final_METEO.ViewModels
             string lang = Prj_final_METEO.Properties.Settings.Default.langue.Split("-").First();
             string request = "?lat=" + lat + "&lon=" + lon + "&lang=" + lang;
 
-            String response = await client.RequeteGetAsync(request);
+            String response = await Client.RequeteGetAsync(request);
 
             try
             {
@@ -252,7 +253,7 @@ namespace Prj_final_METEO.ViewModels
                 MessageBox.Show("Error\n" + ex);
             }
 
-            client.Dispose();
+            Client.Dispose();
         }
     }
 }

@@ -21,5 +21,14 @@ namespace Prj_final_METEO.Models
             this.MaxTemp = MaxTemp;
             this.IconCode = IconCode;
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Result result &&
+                   Date.Equals(result.Date) &&
+                   MinTemp == result.MinTemp &&
+                   MaxTemp == result.MaxTemp &&
+                   IconCode == result.IconCode;
+        }
     }
 }
