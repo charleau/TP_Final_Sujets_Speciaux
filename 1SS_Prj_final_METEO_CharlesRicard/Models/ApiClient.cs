@@ -17,18 +17,18 @@ namespace Prj_final_METEO.Models
         private string _urlBaseApi;
         private HttpClient _httpClient;
 
-        public ApiClient(string urlBaseApi)
+        public ApiClient(string urlBaseApi, HttpClient httpClient)
         {
             if (urlBaseApi.EndsWith('/'))
                 urlBaseApi = urlBaseApi.Substring(0, urlBaseApi.Length - 1);
             _urlBaseApi = urlBaseApi;
 
-            _httpClient = new HttpClient();
+            _httpClient = httpClient;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<string> RequeteGetAsync(string endpoint)
+        public virtual async Task<string> RequeteGetAsync(string endpoint)
         {
             endpoint += "&key=" + Properties.Settings.Default.JetonKey;
 

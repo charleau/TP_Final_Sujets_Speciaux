@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Prj_final_METEO.ViewModels.Delegates.ViewModelDelegates;
 using Prj_final_METEO.ViewModels.Commands;
 using Prj_final_METEO.Views;
 using Prj_final_METEO.DataService.Repositories.Interfaces;

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using Prj_final_METEO.Models;
-using static Prj_final_METEO.ViewModels.Delegates.ViewModelDelegates;
 using Newtonsoft.Json;
 using Prj_final_METEO.ViewModels.Commands;
 using System.Text.Unicode;
@@ -20,6 +19,7 @@ using System.Windows.Controls.Ribbon;
 using Prj_final_METEO.DataService.Repositories.Interfaces;
 using Prj_final_METEO.DataService.Repositories.Database;
 using Prj_final_METEO.DataService;
+using System.Net.Http;
 
 namespace Prj_final_METEO.ViewModels
 {
@@ -30,7 +30,7 @@ namespace Prj_final_METEO.ViewModels
         public RelayCommand DelBTN { get; set; }
         public RelayCommand ClearResult {  get; set; }
 
-        private ObservableCollection<Result> resultList;
+        public ObservableCollection<Result> resultList;
 
         public ObservableCollection<Result> ResultList
         {
@@ -42,7 +42,7 @@ namespace Prj_final_METEO.ViewModels
             }
         }
 
-        private ObservableCollection<Region> savedRegions;
+        public ObservableCollection<Region> savedRegions;
 
         public ObservableCollection<Region> SavedRegions
         {
@@ -65,7 +65,7 @@ namespace Prj_final_METEO.ViewModels
         }
 
 
-        private Region? selectedRegion;
+        public Region? selectedRegion;
         public Region? SelectedRegion
         {
             get { return selectedRegion; }
@@ -86,7 +86,7 @@ namespace Prj_final_METEO.ViewModels
             }
         }
 
-        private double latitude = 0;
+        public double latitude = 0;
         public double Latitude
         {
             get { return latitude; }
@@ -97,7 +97,7 @@ namespace Prj_final_METEO.ViewModels
             }
         }
 
-        private double longitude = 0;
+        public double longitude = 0;
         public double Longitude
         {
             get { return longitude; }
@@ -108,7 +108,7 @@ namespace Prj_final_METEO.ViewModels
             }
         }
 
-        private string region = "";
+        public string region = "";
         public string Region
         {
             get { return region; }
@@ -119,7 +119,7 @@ namespace Prj_final_METEO.ViewModels
             }
         }
 
-        private string regionName;
+        public string regionName;
 
         public string RegionName
         {
@@ -130,7 +130,7 @@ namespace Prj_final_METEO.ViewModels
                 OnPropertyChanged();
             }
         }
-        private string regionCountry;
+        public string regionCountry;
 
         public string RegionCountry
         {
@@ -143,7 +143,7 @@ namespace Prj_final_METEO.ViewModels
         }
 
 
-        private IRegionRepository _regionRepository;
+        public IRegionRepository _regionRepository;
 
 
         public MeteoViewModel(IRegionRepository RegionDB)
@@ -159,7 +159,7 @@ namespace Prj_final_METEO.ViewModels
             SavedRegions = new ObservableCollection<Region>(_regionRepository.GetAll());
         }
 
-        private void ClearResultInfos(object? obj)
+        public void ClearResultInfos(object? obj)
         {
             ResultList.Clear();
             RegionCountry = "";
@@ -167,7 +167,7 @@ namespace Prj_final_METEO.ViewModels
             SelectedRegion = null;
         }
 
-        private void AddLocation(object? obj)
+        public void AddLocation(object? obj)
         {
             if (Region.Trim() == "")
             {
@@ -186,7 +186,7 @@ namespace Prj_final_METEO.ViewModels
             Longitude = 0;
         }
 
-        private void DelLocation(object? obj)
+        public void DelLocation(object? obj)
         {
             Region regToDel = SelectedRegion;
             SelectedRegion = null;
@@ -195,7 +195,7 @@ namespace Prj_final_METEO.ViewModels
             savedRegions.Remove(regToDel);
         }
 
-        private void GetMeteoCommand(object? obj)
+        public void GetMeteoCommand(object? obj)
         {
             if (Properties.Settings.Default.JetonKey == "")
             {
@@ -206,9 +206,9 @@ namespace Prj_final_METEO.ViewModels
             GetMeteo(SelectedRegion);
         }
 
-        private async void GetMeteo(Region region)
+        public async void GetMeteo(Region region)
         {
-            ApiClient client = new ApiClient("https://api.weatherbit.io/v2.0/forecast/daily");
+            ApiClient client = new ApiClient("https://api.weatherbit.io/v2.0/forecast/daily", new HttpClient());
 
             #region Conversion de lat/loo
             // Conversion de lat/lon parce que mon pc est en français mais pas mon portable lol
